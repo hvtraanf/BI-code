@@ -24,26 +24,6 @@ df = pd.read_csv('C:/Users/hvtra/OneDrive/Documents/BI/BI Dataset/Automobile dat
 # print("New Dataset")
 # print(df.head(10))
 
-# print("Add duplicate data")
-# new_row = {'Brand Name': 'Tesla', 'Fuel type': 'Electric', 'Aspiration': 'N/A',
-#            'Door Panel': '4', 'Design': 'Sedan', 'Wheel Drive': 'AWD',
-#            'Engine Location': 'Front', 'Engine Type': 'Electric',
-#            'Cylinder Count': 'N/A', 'Engine Size': 'N/A', 'Fuel System': 'N/A',
-#            'Bore': 'N/A', 'Stroke': 'N/A', 'Compression Ratio': 'N/A',
-#            'Horse Power': '350', 'Top-RPM': 'N/A', 'City Mileage': '130',
-#            'Highway Mileage': '140', 'Price in Dollars': '50000'}
-# new_row_df = pd.DataFrame(new_row, index=[len(df)])
-# df= pd.concat([df, new_row_df], ignore_index=True)
-
-# new_row2 = {'Brand Name': 'Tesla', 'Fuel type': 'Electric', 'Aspiration': 'N/A',
-#            'Door Panel': '4', 'Design': 'Sedan', 'Wheel Drive': 'AWD',
-#            'Engine Location': 'Front', 'Engine Type': 'Electric',
-#            'Cylinder Count': 'N/A', 'Engine Size': 'N/A', 'Fuel System': 'N/A',
-#            'Bore': 'N/A', 'Stroke': 'N/A', 'Compression Ratio': 'N/A',
-#            'Horse Power': '350', 'Top-RPM': 'N/A', 'City Mileage': '130',
-#            'Highway Mileage': '140', 'Price in Dollars': '50000'}
-# new_row2_df = pd.DataFrame(new_row2, index=[len(df)])
-# df= pd.concat([df, new_row2_df], ignore_index=True)
 
 # print("Check for duplicate rows")
 # print(df.duplicated())
@@ -65,7 +45,7 @@ df = pd.read_csv('C:/Users/hvtra/OneDrive/Documents/BI/BI Dataset/Automobile dat
 
 # print(df.head(10))
 
-# print(df.columns)
+print(df.columns)
 
 # Count the number of Audi cars in the dataframe
 audi_count = df['Brand Name'].value_counts()['audi']
@@ -73,8 +53,69 @@ audi_count = df['Brand Name'].value_counts()['audi']
 # Print the count
 print(f'There are {audi_count} Audi cars in the dataset.')
 
-# Filter rows with the brand 'Isuzu'
-isuzu_df = df[df['Brand Name'] == 'Isuzu']
+# Create a list of dictionaries for Tesla cars
+# tesla_models = [
+#     {
+#         'Brand Name': 'Tesla',
+#         'Fuel type': 'Electric',
+#         'Aspiration': 'Std',  # Replacing 'Standard' with 'Std'
+#         'Door Panel': 4,  # Number of doors for Model S
+#         'Design': 'Sedan',  # Sedan design for all Tesla models
+#         'Wheel Drive': 'AWD',
+#         'Engine Location': 'Front',
+#         'Engine Type': 'Electric',
+#         'Cylinder Count': None,
+#         'Engine Size': None,
+#         'Fuel System': 'Electric',
+#         'Bore': None,
+#         'Stroke': None,
+#         'Compression Ratio': None,
+#         'Horse Power': 500,
+#         'Top-RPM': None,
+#         'City Mileage': 90,
+#         'Highway Mileage': 110,
+#         'Price in Dollars': 90000
+#     },
+#     {
+#         'Brand Name': 'Tesla',
+#         'Fuel type': 'Electric',
+#         'Aspiration': 'Std',  # Replacing 'Standard' with 'Std'
+#         'Door Panel': 4,  # Number of doors for Model 3
+#         'Design': 'Sedan',  # Sedan design for all Tesla models
+#         'Wheel Drive': 'AWD',
+#         'Engine Location': 'Front',
+#         'Engine Type': 'Electric',
+#         'Cylinder Count': None,
+#         'Engine Size': None,
+#         'Fuel System': 'Electric',
+#         'Bore': None,
+#         'Stroke': None,
+#         'Compression Ratio': None,
+#         'Horse Power': 300,
+#         'Top-RPM': None,
+#         'City Mileage': 100,
+#         'Highway Mileage': 120,
+#         'Price in Dollars': 60000
+#     }
+# ]
 
-# Display all columns with brand 'Isuzu'
-print(isuzu_df)
+# # Convert the list of dictionaries to a DataFrame
+# tesla_df = pd.DataFrame(tesla_models)
+
+# # Concatenate the original DataFrame with the Tesla DataFrame
+# df = pd.concat([df, tesla_df], ignore_index=True)
+
+# # Replace empty values with 'N/A'
+# df.fillna('N/A', inplace=True)
+
+# Replace "gas" with "petrol" in the "Fuel type" column
+df['Fuel type'].replace('gas', 'petrol', inplace=True)
+
+# Save the updated DataFrame to a new CSV file
+# df.to_csv("C:/Users/hvtra/OneDrive/Documents/BI/BI Dataset/Automobile data.csv", index=False)
+
+# Add a new column named 'Test' with the value "test" for all rows
+# df['Test'] = 'test'
+
+# Display the last few rows of the updated DataFrame
+print(df.tail())
