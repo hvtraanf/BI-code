@@ -115,7 +115,16 @@ df['Fuel type'].replace('gas', 'petrol', inplace=True)
 # df.to_csv("C:/Users/hvtra/OneDrive/Documents/BI/BI Dataset/Automobile data.csv", index=False)
 
 # Add a new column named 'Test' with the value "test" for all rows
-# df['Test'] = 'test'
+df['Test'] = 'test'
+print(df.columns)
 
-# Display the last few rows of the updated DataFrame
-print(df.tail())
+df.drop(columns='Test', inplace=True)
+print(df.columns)
+
+# Filter out rows where both conditions are met using boolean indexing
+filtered_df = df[(df['Fuel type'] == 'petrol') & (df['Price in Dollars'] > 20000)]
+
+# Save the filtered DataFrame to a new CSV file
+filtered_df.to_csv("filtered_file.csv", index=False)
+ft_df = pd.read_csv('filtered_file.csv')
+print(ft_df.head())
