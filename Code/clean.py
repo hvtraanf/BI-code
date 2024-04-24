@@ -1,5 +1,5 @@
 import pandas as pd
-df = pd.read_csv('C:/Users/hvtra/OneDrive/Documents/BI/BI Dataset/Automobile data.csv')
+df = pd.read_csv('C:/Users/Admin/Documents/ASM/BI-code/BI Dataset/Automobile data.csv')
 
 # print("Original Dataset")
 # print(df.head(10))
@@ -112,7 +112,7 @@ print(f'There are {audi_count} Audi cars in the dataset.')
 df['Fuel type'].replace('gas', 'petrol', inplace=True)
 
 # Save the updated DataFrame to a new CSV file
-# df.to_csv("C:/Users/hvtra/OneDrive/Documents/BI/BI Dataset/Automobile data.csv", index=False)
+# df.to_csv("C:/Users/Admin/Documents/ASM/BI-code/BI Dataset/Automobile data.csv", index=False)
 
 # Add a new column named 'Test' with the value "test" for all rows
 df['Test'] = 'test'
@@ -128,3 +128,25 @@ filtered_df = df[(df['Fuel type'] == 'petrol') & (df['Price in Dollars'] > 20000
 filtered_df.to_csv("filtered_file.csv", index=False)
 ft_df = pd.read_csv('filtered_file.csv')
 print(ft_df.head())
+
+# Function to calculate the 25th and 75th percentiles for a series
+def percentiles(series):
+    Q1 = series.quantile(0.25)
+    Q3 = series.quantile(0.75)
+    return Q1, Q3
+
+# Function to calculate the IQR for a series
+def iqr(series):
+    Q1, Q3 = percentiles(series)
+    IQR = Q3 - Q1
+    return Q1, Q3, IQR
+
+# Remove outliers from the 'Price in Dollars' column
+Q1, Q3, IQR = iqr(df['Price in Dollars'])
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+df_cleaned = df[(df['Price in Dollars'] >= lower_bound) & (df['Price in Dollars'] <= upper_bound)]
+
+
+# Save the cleaned dataset
+df_cleaned.to_csv("cleaned_data_by_brand.csv", index=False)
